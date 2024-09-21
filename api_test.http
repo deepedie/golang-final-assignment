@@ -1,0 +1,127 @@
+### Register User
+POST http://localhost:8080/users/register
+Content-Type: application/json
+
+{
+    "username" : "jefry2",
+    "age"      : 22,
+    "password" : "123123",
+    "email"    : "test@gmail.com"
+
+}
+
+### Login
+POST http://localhost:8080/users/login
+Content-Type: application/json
+
+{
+    "username" : "jefry",
+    "password" : "123123"
+}
+
+### Get All Photo
+GET http://localhost:8080/photos/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+### POST Photo
+POST http://localhost:8080/photos/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+{
+    "title": "test",
+    "caption": "test",
+    "photo_url": "www.foto1.com"
+}
+
+### UPDATE Photo
+PUT http://localhost:8080/photos/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+{
+    "title": "testEdit",
+    "caption": "testEdit",
+    "photo_url": "www.fotoedit.com"
+}
+
+
+### DELETE PHOTO
+DELETE http://localhost:8080/photos/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+
+### Get All Comment
+GET http://localhost:8080/comments/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+### Get Comment By ID
+GET http://localhost:8080/comments/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+### POST Comment
+POST http://localhost:8080/comments/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+{
+    "message": "test",
+    "photo_id": 3
+}
+
+### UPDATE Comment
+PUT http://localhost:8080/comments/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+{
+    "message": "test edit",
+    "photo_id": 3
+}
+
+
+### DELETE Comment
+DELETE http://localhost:8080/comments/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+### Get All Social MediA
+GET http://localhost:8080/socialmedia/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+### Get Social MediA By ID
+GET http://localhost:8080/socialmedia/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+### POST Social MediA
+POST http://localhost:8080/socialmedia/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+{
+    "name": "test",
+    "social_media_url": "www.hellow.com"
+}
+
+### UPDATE Social MediA
+PUT http://localhost:8080/socialmedia/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
+{
+    "name": "test edit",
+    "social_media_url": "www.edit.com"
+}
+
+
+### DELETE Social MediA
+DELETE http://localhost:8080/socialmedia/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
+
