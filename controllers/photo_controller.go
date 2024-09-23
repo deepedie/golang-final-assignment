@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
@@ -43,7 +44,10 @@ func (pc *PhotoController) CreatePhoto(c *gin.Context) {
 	var photo models.Photo
 
 	if err := c.ShouldBindJSON(&photo); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":   "Bad Request",
+			"message": err.Error(),
+		})
 		return
 	}
 
@@ -51,6 +55,14 @@ func (pc *PhotoController) CreatePhoto(c *gin.Context) {
 	userID := uint(userData["id"].(float64))
 
 	photo.UserID = userID
+
+	if _, err := govalidator.ValidateStruct(&photo); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":   "Validation Error",
+			"message": err.Error(),
+		})
+		return
+	}
 
 	createdPhoto, err := pc.photoService.CreatePhoto(photo)
 	if err != nil {

@@ -30,11 +30,19 @@ func (s *photoService) GetPhotoByID(id uint) (models.Photo, error) {
 }
 
 func (s *photoService) CreatePhoto(photo models.Photo) (models.Photo, error) {
-	return s.repo.Create(photo)
+	photo, err := s.repo.Create(photo)
+	if err != nil {
+		return models.Photo{}, err
+	}
+	return s.repo.FindByID(photo.ID)
 }
 
 func (s *photoService) UpdatePhoto(photo models.Photo) (models.Photo, error) {
-	return s.repo.Update(photo)
+	photo, err := s.repo.Update(photo)
+	if err != nil {
+		return models.Photo{}, err
+	}
+	return s.repo.FindByID(photo.ID)
 }
 
 func (s *photoService) DeletePhoto(id uint) error {

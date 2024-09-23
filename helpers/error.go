@@ -1,14 +1,21 @@
 package helpers
 
-type CustomError struct {
-	Message       string `json:"message"`
-	OriginalError error  `json:"original_error,omitempty"`
+import "fmt"
+
+type UniqueViolationError struct {
+	Field      string
+	StatusCode int
 }
 
-func (e *CustomError) Error() string {
+func (e *UniqueViolationError) Error() string {
+	return fmt.Sprintf("%s must be unique", e.Field)
+}
+
+type ValidationError struct {
+	Message    string
+	StatusCode int
+}
+
+func (e *ValidationError) Error() string {
 	return e.Message
-}
-
-func NewCustomError(message string, err error) *CustomError {
-	return &CustomError{Message: message, OriginalError: err}
 }

@@ -5,8 +5,9 @@ import (
 	"assignment-4/models"
 	repositories "assignment-4/repository"
 	"errors"
-	"strings"
+	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"gorm.io/gorm"
 )
 
@@ -27,12 +28,34 @@ func NewUserService(userRepo repositories.UserRepository) UserService {
 }
 
 func (s *userService) Register(user models.User) (models.User, error) {
+	// _, err := govalidator.ValidateStruct(&user)
+	// if err != nil {
+	// 	return models.User{}, err
+	// }
+
+	_, err := govalidator.ValidateStruct(&user)
+	if err != nil {
+		return models.User{}, &helpers.ValidationError{Message: err.Error(), StatusCode: http.StatusBadRequest}
+	}
+
+	if s.userRepo.ExistsByEmail(user.Email) {
+		return models.User{}, &helpers.UniqueViolationError{Field: "email", StatusCode: http.StatusConflict}
+	}
+	if s.userRepo.ExistsByUsername(user.Username) {
+		return models.User{}, &helpers.UniqueViolationError{Field: "username", StatusCode: http.StatusConflict}
+	}
+
 	createdUser, err := s.userRepo.Create(user)
 	if err != nil {
-		if strings.Contains(err.Error(), "duplicate key value violates unique constraint") {
-			return models.User{}, errors.New("email must be unique")
-		}
-		return models.User{}, err // Return other errors as-is
+		return models.User{}, err
+		// if strings.Contains(err.Error(), "duplicate key value violates unique constraint") {
+		// 	if strings.Contains(err.Error(), "idx_users_email") {
+		// 		return models.User{}, errors.New("email must be unique")
+		// 	}
+		// 	if strings.Contains(err.Error(), "idx_users_username") {
+		// 		return models.User{}, errors.New("username must be unique")
+		// 	}
+		// }
 	}
 	return createdUser, nil
 }

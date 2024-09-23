@@ -3,10 +3,10 @@ POST http://localhost:8080/users/register
 Content-Type: application/json
 
 {
-    "username" : "jefry2",
+    "username" : "jefry1",
     "age"      : 22,
     "password" : "123123",
-    "email"    : "test@gmail.com"
+    "email"    : "test321@gmail.com"
 
 }
 
@@ -41,9 +41,9 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWQiOjF9.DLzFRt00kxefaldT63m4hDHdxORrzHV0XxWftIfZeeg
 
 {
-    "title": "testEdit",
+    "title": "testEditasd",
     "caption": "testEdit",
-    "photo_url": "www.fotoedit.com"
+    "photo_url": "www.fotoedita.com"
 }
 
 

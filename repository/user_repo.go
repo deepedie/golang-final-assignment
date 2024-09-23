@@ -9,6 +9,8 @@ import (
 type UserRepository interface {
 	Create(user models.User) (models.User, error)
 	FindByUsernameOrEmail(username string, email string) (models.User, error)
+	ExistsByEmail(email string) bool
+	ExistsByUsername(username string) bool
 }
 
 type userRepository struct {
@@ -37,4 +39,16 @@ func (r *userRepository) FindByUsernameOrEmail(username string, email string) (m
 		return models.User{}, err
 	}
 	return user, nil
+}
+
+func (r *userRepository) ExistsByEmail(email string) bool {
+	var user models.User
+	result := r.db.Where("email = ?", email).First(&user)
+	return result.RowsAffected > 0
+}
+
+func (r *userRepository) ExistsByUsername(username string) bool {
+	var user models.User
+	result := r.db.Where("username = ?", username).First(&user)
+	return result.RowsAffected > 0
 }

@@ -5,7 +5,6 @@ import (
 	"assignment-4/models"
 	"assignment-4/services"
 	"assignment-4/utils"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -44,21 +43,63 @@ func (ctrl *UserController) Register(c *gin.Context) {
 
 	newUser, err := ctrl.UserService.Register(user)
 	if err != nil {
-		fmt.Println("ERROR", err)
-		if err.Error() == "email must be unique" {
+		switch e := err.(type) {
+		case *helpers.UniqueViolationError:
 			c.JSON(http.StatusConflict, gin.H{
-				"error":   "Conflict",
-				"message": err.Error(),
+				"statusCode": e.StatusCode,
+				"error":      "Conflict",
+				"message":    e.Error(),
+			})
+			return
+		case *helpers.ValidationError:
+			c.JSON(http.StatusBadRequest, gin.H{
+				"statusCode": e.StatusCode,
+				"error":      "Validation Error",
+				"message":    e.Error(),
+			})
+			return
+		default:
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"statusCode": http.StatusInternalServerError,
+				"error":      "Internal Server Error",
+				"message":    "An error occurred during registration.",
 			})
 			return
 		}
-
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error":   "Internal Server Error",
-			"message": "An error occurred during registration.",
-		})
-		return
 	}
+
+	// newUser, err := ctrl.UserService.Register(user)
+	// if err != nil {
+	// 	if strings.Contains(err.Error(), "required") || strings.Contains(err.Error(), "minstringlength") {
+	// 		c.JSON(http.StatusBadRequest, gin.H{
+	// 			"error":   "Validation Error",
+	// 			"message": err.Error(),
+	// 		})
+	// 		return
+	// 	}
+
+	// 	if err.Error() == "email must be unique" {
+	// 		c.JSON(http.StatusConflict, gin.H{
+	// 			"error":   "Conflict",
+	// 			"message": err.Error(),
+	// 		})
+	// 		return
+	// 	}
+
+	// 	if err.Error() == "username must be unique" {
+	// 		c.JSON(http.StatusConflict, gin.H{
+	// 			"error":   "Conflict",
+	// 			"message": err.Error(),
+	// 		})
+	// 		return
+	// 	}
+
+	// 	c.JSON(http.StatusInternalServerError, gin.H{
+	// 		"error":   "Internal Server Error",
+	// 		"message": err.Error(),
+	// 	})
+	// 	return
+	// }
 
 	c.JSON(http.StatusCreated, gin.H{
 		"id":       newUser.ID,

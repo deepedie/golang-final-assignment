@@ -11,9 +11,9 @@ type Photo struct {
 	GormModel
 	Title     string    `json:"title" form:"title" valid:"required~Title is required"`
 	Caption   string    `json:"caption" form:"caption"`
-	PhotoURL  string    `json:"photo_url" form:"photo_url" valid:"required~Photo URL is required,url~Invalid URL format"`
+	PhotoURL  string    `json:"photo_url" form:"photo_url" valid:"required~Photo URL is required"`
 	UserID    uint      `json:"user_id"`
-	User      *User     `json:"user,omitempty" gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	User      *User     `json:"user" gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
